@@ -152,6 +152,10 @@ public class QuotationController implements Serializable {
             ObjectInputStream ois = new ObjectInputStream(fis);
             ArrayList quotations = (ArrayList) ois.readObject();
             this.quotations = quotations;
+            //재실행시 명언 번호가 0으로 초기화가 되어 마지막 번호를 입력함
+            //(Quotation)이 왜 들어가야 하는지 알아봐야할 듯...
+            Quotation quotation = (Quotation) quotations.get(quotations.size()-1);
+            this.id = quotation.getId();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
