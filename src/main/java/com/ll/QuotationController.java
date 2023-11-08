@@ -70,11 +70,10 @@ public class QuotationController {
         System.out.printf("%d번 명언이 수정되었습니다.\n", quotation.getId());
     }
 
-
     public void actionTestData(Rq rq) {
         int volume = rq.getValueByParamName("volume", -1);
 
-        if (volume == -1) {
+        if (volume <= -1) {
             MessageIfInvalid(-1, "volume", volume);
         } else {
             for (int i = 0; i < volume; i++) {
@@ -91,13 +90,13 @@ public class QuotationController {
 
 
 
-
     // 파라미터(id)의 값이 유효한 경우(정수o && 리스트에 존재) index값을 반환
     // 파라미터(id) 값이 유효하지 않는 경우(정수x || 리스트에 없음) -1을 반환
     public int findValidIndex(Rq rq) {
         int valueOfId = rq.getValueByParamName("id", -1);
 
-        if (valueOfId == -1) {
+        // 파라미터 값이 음수인 경우를 대비해 <= -1로 변경
+        if (valueOfId <= -1) {
             MessageIfInvalid(-1, "id", valueOfId);
             return -1;
         }
@@ -112,17 +111,19 @@ public class QuotationController {
         return indexOfId;
     }
 
-    // id 값이 유효하지 않는 경우 code에 따라 메시지 출력하는 메서드
+
+    // 파라미터 값이 유효하지 않는 경우, 경우에 따라 메시지 출력하는 메서드
+    // code -1 : 파라미터의 값이 정수가 아닌 경우
+    // code -2 : 파라미터의 값과 일치하는 객체가 리스트에 없는 경우
     public void MessageIfInvalid(int code, String paramName, int valueOfId) {
-        // code -1 : 파라미터의 값이 정수가 아닌 경우
         if (code == -1) {
             System.out.printf("%s를 정확하게 입력해주세요.\n", paramName);
         }
-        // code -2 : 파라미터의 값과 일치하는 객체가 리스트에 없는 경우
         if (code == -2) {
             System.out.printf("%d번 명언이 존재하지 않습니다.\n", valueOfId);
         }
     }
+
 
     // id의 값이 주어졌을 때 해당 값이 quotations 리스트 몇 번째 자리(index)에 있는지 찾는 메서드
     public int findIndexById(int idValue, int defaultValue) {
