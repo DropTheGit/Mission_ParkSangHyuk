@@ -1,9 +1,10 @@
 package com.ll;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class QuotationController {
+public class QuotationController implements Serializable {
 
     private Scanner scanner;
     private int id = 0;
@@ -136,4 +137,23 @@ public class QuotationController {
         return defaultValue;
     }
 
+    public void actionSave() {
+        try (FileOutputStream fos = new FileOutputStream("quotations.txt")) {
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(quotations);
+        } catch (
+                IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void actionLoad() {
+        try (FileInputStream fis = new FileInputStream("quotations.txt")) {
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            ArrayList quotations = (ArrayList) ois.readObject();
+            this.quotations = quotations;
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package com.ll;
 
+import java.io.File;
 import java.util.Scanner;
 
 public class App {
@@ -12,6 +13,9 @@ public class App {
         scanner = new Scanner(System.in);
         qc = new QuotationController(scanner);
 
+        File file = new File("quotations.txt");
+        if (file.exists()) {qc.actionLoad();}
+
 
         while (true) {
             System.out.print("명령) ");
@@ -20,6 +24,7 @@ public class App {
 
             switch (rq.action) {
                 case "종료":
+                    qc.actionSave();
                     return;
                 case "등록":
                     qc.actionWrite();
