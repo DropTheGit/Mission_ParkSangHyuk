@@ -12,7 +12,8 @@ public class App {
         System.out.println("== 명언 앱 ==");
         scanner = new Scanner(System.in);
         qc = new QuotationController(scanner);
-
+        // 처음 앱 실행시 "quotations.txt 파일이 없는 경우 오류가 남
+        // 파일 객체를 생성하여 if문으로 해당 경로가 존재하는 경우에만 actionLoad(); 하도록 입력
         File file = new File("quotations.txt");
         if (file.exists()) {qc.actionLoad();}
 
