@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class QuotationController implements Serializable {
+public class QuotationController {
 
     private Scanner scanner;
     private int id = 0;
